@@ -1,8 +1,14 @@
+import petl as etl
 from django.views import View
+from django.http import HttpResponse
+
+
+from swapi_app.generators.people_generator import SwapiPeopleConnector
 
 
 class PeopleView(View):
     def get(self, request):
-        response = request.get("https://swapi.dev/api/people/")
-        # response["results"][0]["homeworld"]
-        return response.json()
+        table = SwapiPeopleConnector().fetch_people()
+        print(list(table))
+        etl.tocsv(table, "example.csv")
+        return HttpResponse("OK")
