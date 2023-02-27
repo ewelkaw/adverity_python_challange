@@ -3,12 +3,12 @@ from django.views import View
 from django.http import HttpResponse
 
 
-from swapi_app.generators.people_generator import SwapiPeopleConnector
+from swapi_app.connectors.people_connector import SwapiPeopleConnector
+from swapi_app.converters.converter import TableConverter, HEADER
 
 
 class PeopleView(View):
     def get(self, request):
-        table = SwapiPeopleConnector().fetch_people()
-        print(list(table))
-        etl.tocsv(table, "example.csv")
-        return HttpResponse("OK")
+        table = etl.setheader(SwapiPeopleConnector().fetch_people(), HEADER)
+        converted_table = TableConverter().convert_table(table)
+        return HttpResponse(converted_table)
