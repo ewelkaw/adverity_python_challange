@@ -1,5 +1,5 @@
 import petl as etl
-from petl import dateparser
+from petl import dateparser, numparser
 from swapi_app.connectors.planets_connector import SwapiPlanetsConnector
 
 HEADER = [
@@ -21,10 +21,10 @@ class TableConverter:
         planets_table = etl.setheader(
             SwapiPlanetsConnector().fetch_planets(), ["homeworld", "url"]
         )
-
         return (
             people_table.join(planets_table, lkey="homeworld", rkey="url")
             .cutout("homeworld")
+            .convert("mass", numparser(int))
             .movefield("edited", 9)
             .rename("edited", "date")
             .convert("date", dateparser("%Y-%m-%dT%H:%M:%S.%f%z"))

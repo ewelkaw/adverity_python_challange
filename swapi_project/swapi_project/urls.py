@@ -15,6 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from swapi_app.views.people import PeopleView
+from swapi_app.views.tables import SwapiTablesView
+from swapi_app.views.single_table import SwapiSingleTableView
 
-urlpatterns = [path("admin/", admin.site.urls), path("people/", PeopleView.as_view())]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", SwapiTablesView.as_view(), name="tables"),
+    path(
+        "single_table/<int:id>",
+        SwapiSingleTableView.as_view(),
+        name="single_table",
+    ),
+]
