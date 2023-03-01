@@ -1,5 +1,6 @@
 import petl as etl
-from petl import dateparser, numparser
+import requests
+from petl import dateparser
 from swapi_app.connectors.planets_connector import SwapiPlanetsConnector
 
 HEADER = [
@@ -19,7 +20,7 @@ HEADER = [
 class TableConverter:
     def convert_table(self, people_table):
         planets_table = etl.setheader(
-            SwapiPlanetsConnector().fetch_data(), ["homeworld", "url"]
+            SwapiPlanetsConnector(requests).fetch_data(), ["homeworld", "url"]
         )
         return (
             people_table.join(planets_table, lkey="homeworld", rkey="url")

@@ -1,4 +1,5 @@
 import petl as etl
+import requests
 from django.views import View
 from django.shortcuts import render, redirect
 
@@ -17,8 +18,8 @@ class SwapiTablesView(View):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request):
-        table = etl.setheader(SwapiPeopleConnector().fetch_data(), HEADER)
+    def post(self, _):
+        table = etl.setheader(SwapiPeopleConnector(requests).fetch_data(), HEADER)
         converted_table = TableConverter().convert_table(table)
         create_new_record(converted_table)
         return redirect("/")

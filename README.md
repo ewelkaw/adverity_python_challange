@@ -9,3 +9,11 @@ A simple app which allows to collect, resolve and inspect information about char
    ```
    make build run
    ```
+
+2. How to make migrations:
+
+   - go to `~/adverity_python_challange`:
+
+   ```
+   make makemigrations migrate
+   ```

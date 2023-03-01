@@ -18,6 +18,7 @@ class ValuesCountTableView(View):
         if columns := tuple((x[0] for x in header_filter if x[1] == "1")):
             table = etl.valuecounts(table, *columns).cutout("frequency")
         table = [list(x) for x in table]
+
         context = {
             "file_name": table_record.csv_file.name.strip("static/"),
             "table": table,

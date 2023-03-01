@@ -8,3 +8,5 @@ migrate:
 	docker run -it -v "$(PWD):/app" --rm swapi_app python3 manage.py migrate
 createsuperuser:
 	docker run -it -v  "$(PWD):/app" --rm swapi_app python3 manage.py createsuperuser
+test:
+	docker run -it -v  "$(PWD):/app" --rm swapi_app python3 manage.py test
