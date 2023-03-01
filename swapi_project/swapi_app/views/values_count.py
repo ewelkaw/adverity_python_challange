@@ -2,27 +2,28 @@ from swapi_app.models.swapi_data_record import SwapiDataRecord
 from django.shortcuts import render
 from django.views import View
 import petl as etl
+from urllib.parse import urlencode
 
 
-class SwapiSingleTableView(View):
-    template_name = "single_table.html"
+class ValuesCountTableView(View):
+    template_name = "values_count.html"
 
     def get(self, request, id):
         page = int(request.GET.get("page", 1))
         table_record = SwapiDataRecord.objects.get(pk=id)
         table = etl.fromcsv(table_record.csv_file).head(page * 10)
-        table = [list(x) for x in table]
-        # note - it may display one extra link
-        # in case when number of records is divisible by 10
-        # but in sake of simplicity and not breaking with huge amount
-        # of (which would be the problem in case of counting records)
-        next_page_validator = len(table) == (page * 10) + 1  # header
 
+        header = list(etl.header(table))
+        header_filter = list(map(lambda h: (h, request.GET.get(h, ["0"])[-1]), header))
+        if columns := tuple((x[0] for x in header_filter if x[1] == "1")):
+            table = etl.valuecounts(table, *columns).cutout("frequency")
+        table = [list(x) for x in table]
         context = {
             "file_name": table_record.csv_file.name.strip("static/"),
             "table": table,
             "id": id,
-            "next_page": page + 1 if next_page_validator else 0,
+            "header_filter": header_filter,
             "page": page,
+            "links": urlencode(header_filter),
         }
         return render(request, self.template_name, context)

@@ -19,13 +19,15 @@ HEADER = [
 class TableConverter:
     def convert_table(self, people_table):
         planets_table = etl.setheader(
-            SwapiPlanetsConnector().fetch_planets(), ["homeworld", "url"]
+            SwapiPlanetsConnector().fetch_data(), ["homeworld", "url"]
         )
         return (
             people_table.join(planets_table, lkey="homeworld", rkey="url")
             .cutout("homeworld")
-            .convert("mass", numparser(int))
             .movefield("edited", 9)
             .rename("edited", "date")
             .convert("date", dateparser("%Y-%m-%dT%H:%M:%S.%f%z"))
+            .convert("mass", int)
         )
+        # Decided to leave empty or missing values as they are
+        # as there was nothing about it in specification

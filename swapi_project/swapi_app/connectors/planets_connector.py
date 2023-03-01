@@ -4,7 +4,7 @@ import requests
 class SwapiPlanetsConnector:
     next_page = "https://swapi.dev/api/planets/"
 
-    def fetch_planets(self):
+    def fetch_data(self):
         while self.next_page:
             response = requests.get(self.next_page)
             parsed_response = response.json()

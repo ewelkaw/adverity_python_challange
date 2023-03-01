@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from swapi_app.views.tables import SwapiTablesView
 from swapi_app.views.single_table import SwapiSingleTableView
+from swapi_app.views.values_count import ValuesCountTableView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,5 +26,15 @@ urlpatterns = [
         "single_table/<int:id>",
         SwapiSingleTableView.as_view(),
         name="single_table",
+    ),
+    # path(
+    #     "values_count/<int:id>",
+    #     ValuesCountTableView.as_view(),
+    #     name="values_count",
+    # ),
+    path(
+        "single_table/<int:id>/values_count/",
+        ValuesCountTableView.as_view(),
+        name="values_count",
     ),
 ]

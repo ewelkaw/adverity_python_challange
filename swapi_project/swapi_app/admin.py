@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models.people import PeopleTable
+from .models.swapi_data_record import SwapiDataRecord
 
-admin.site.register(PeopleTable)
+admin.site.register(SwapiDataRecord)
