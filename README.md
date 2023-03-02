@@ -17,3 +17,5 @@ A simple app which allows to collect, resolve and inspect information about char
    ```
    make makemigrations migrate
    ```
+
+   Values Count table is created based on loaded data on previous page as it wasn't clarified in specification

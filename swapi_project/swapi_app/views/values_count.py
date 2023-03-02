@@ -17,6 +17,8 @@ class ValuesCountTableView(View):
         header_filter = list(map(lambda h: (h, request.GET.get(h, ["0"])[-1]), header))
         if columns := tuple((x[0] for x in header_filter if x[1] == "1")):
             table = etl.valuecounts(table, *columns).cutout("frequency")
+            # counting values based on loaded data on previous page
+            # as it wasn't clarified in specification
         table = [list(x) for x in table]
 
         context = {
