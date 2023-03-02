@@ -41,6 +41,5 @@ class PlanetsRequestMock:
 
 class SwapiPlanetsConnectorTest(TestCase):
     def test_swapi_people_connector(self):
-        print(SwapiPlanetsConnector(PlanetsRequestMock()).fetch_data())
         response = SwapiPlanetsConnector(PlanetsRequestMock()).fetch_data()
         self.assertEqual(list(response), EXPECTED_DATA)
