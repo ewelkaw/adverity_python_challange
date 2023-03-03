@@ -5,41 +5,41 @@ from django.test import TestCase
 
 from swapi_app.converters.converter import HEADER, TableConverter
 
-EXPECTED_DATA = (
-    {
-        "name": "Luke Skywalker",
-        "height": "172",
-        "mass": 77,
-        "hair_color": "blond",
-        "skin_color": "fair",
-        "eye_color": "blue",
-        "birth_year": "19BBY",
-        "gender": "male",
-        "homeworld": "Alderaan",
-        "date": datetime.date(2014, 12, 20),
-    },
-    {
-        "name": "C-3PO",
-        "height": "167",
-        "mass": 75,
-        "hair_color": "n/a",
-        "skin_color": "gold",
-        "eye_color": "yellow",
-        "birth_year": "112BBY",
-        "gender": "n/a",
-        "homeworld": "Alderaan",
-        "date": datetime.date(2014, 12, 20),
-    },
-)
+EXPECTED_DATA = [
+    (
+        "Luke Skywalker",
+        "172",
+        77,
+        "blond",
+        "fair",
+        "blue",
+        "19BBY",
+        "male",
+        "Alderaan",
+        datetime.date(2014, 12, 20),
+    ),
+    (
+        "C-3PO",
+        "167",
+        75,
+        "n/a",
+        "gold",
+        "yellow",
+        "112BBY",
+        "n/a",
+        "Alderaan",
+        datetime.date(2014, 12, 20),
+    ),
+]
 
-planets_data = [
+PLANETS_DATA = [
     {"homeworld": "Alderaan", "url": "https://swapi.dev/api/planets/2/"},
     {"homeworld": "Yavin IV", "url": "https://swapi.dev/api/planets/3/"},
     {"homeworld": "Hoth", "url": "https://swapi.dev/api/planets/4/"},
     {"homeworld": "Dagobah", "url": "https://swapi.dev/api/planets/5/"},
     {"homeworld": "Bespin", "url": "https://swapi.dev/api/planets/6/"},
 ]
-people_data = [
+PEOPLE_DATA = [
     {
         "name": "Luke Skywalker",
         "height": "172",
@@ -102,23 +102,14 @@ class SwapiPlanetsConnectorMock:
         pass
 
     def fetch_data(self):
-        return etl.fromdicts(planets_data)
+        return etl.fromdicts(PLANETS_DATA)
 
 
 class ConverterTest(TestCase):
     def test_table_converter(self):
         table = etl.fromdicts(
-            map(lambda x: {name: x[name] for name in HEADER}, people_data)
+            map(lambda x: {name: x[name] for name in HEADER}, PEOPLE_DATA)
         )
         converted_table = TableConverter(SwapiPlanetsConnectorMock).convert_table(table)
-        expected_table = etl.fromdicts(EXPECTED_DATA)
 
-        self.assertEqual(
-            list(etl.util.base.data(converted_table)),
-            list(etl.util.base.data(expected_table)),
-        )
-
-        self.assertEqual(
-            list(etl.util.base.header(converted_table)),
-            list(etl.util.base.header(expected_table)),
-        )
+        self.assertEqual(list(etl.util.base.data(converted_table)), EXPECTED_DATA)
