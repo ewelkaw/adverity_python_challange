@@ -1,7 +1,9 @@
-from django.test import TestCase
-import petl as etl
 import datetime
-from swapi_app.converters.converter import TableConverter, HEADER
+
+import petl as etl
+from django.test import TestCase
+
+from swapi_app.converters.converter import HEADER, TableConverter
 
 EXPECTED_DATA = (
     {

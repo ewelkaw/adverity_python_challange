@@ -1,6 +1,7 @@
 import petl as etl
 import requests
 from petl import dateparser
+
 from swapi_app.connectors.planets_connector import SwapiPlanetsConnector
 
 HEADER = [

@@ -1,7 +1,8 @@
-from swapi_app.models.swapi_data_record import SwapiDataRecord
+import petl as etl
 from django.shortcuts import render
 from django.views import View
-import petl as etl
+
+from swapi_app.models.swapi_data_record import SwapiDataRecord
 
 
 class SwapiSingleTableView(View):

@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from swapi_app.connectors.planets_connector import SwapiPlanetsConnector
 
 # Create your tests here.

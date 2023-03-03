@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from swapi_app.connectors.people_connector import SwapiPeopleConnector
 
 # Create your tests here.

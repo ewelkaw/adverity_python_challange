@@ -1,12 +1,12 @@
 import petl as etl
 import requests
+from django.shortcuts import redirect, render
 from django.views import View
-from django.shortcuts import render, redirect
 
 from swapi_app.connectors.people_connector import SwapiPeopleConnector
-from swapi_app.converters.converter import TableConverter, HEADER
-from swapi_app.models.swapi_data_record import SwapiDataRecord
+from swapi_app.converters.converter import HEADER, TableConverter
 from swapi_app.helpers import create_new_record
+from swapi_app.models.swapi_data_record import SwapiDataRecord
 
 
 class SwapiTablesView(View):

@@ -1,7 +1,9 @@
-import uuid
 import tempfile
+import uuid
+
 import petl as etl
 from django.core.files import File
+
 from swapi_app.models.swapi_data_record import SwapiDataRecord
 
 

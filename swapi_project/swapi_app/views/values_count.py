@@ -1,8 +1,10 @@
-from swapi_app.models.swapi_data_record import SwapiDataRecord
+from urllib.parse import urlencode
+
+import petl as etl
 from django.shortcuts import render
 from django.views import View
-import petl as etl
-from urllib.parse import urlencode
+
+from swapi_app.models.swapi_data_record import SwapiDataRecord
 
 
 class ValuesCountTableView(View):
