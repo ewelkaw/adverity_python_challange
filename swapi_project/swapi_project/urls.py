@@ -28,11 +28,6 @@ urlpatterns = [
         SwapiSingleTableView.as_view(),
         name="single_table",
     ),
-    # path(
-    #     "values_count/<int:id>",
-    #     ValuesCountTableView.as_view(),
-    #     name="values_count",
-    # ),
     path(
         "single_table/<int:id>/values_count/",
         ValuesCountTableView.as_view(),
