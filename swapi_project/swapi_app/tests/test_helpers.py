@@ -8,13 +8,10 @@ class SwapiTablesViewTest(TestCase):
     header = ["foo", "bar"]
     columns = [["0", "1", "2"], ["a", "b", "c"]]
 
-    def setUp(self) -> None:
+    def test_get_all_swapi_data_records_after_creating_them_in_helper(self):
         table = etl.fromcolumns(self.columns, header=self.header)
         for _ in range(5):
             create_new_record(table)
-        return super().setUp()
-
-    def test_get_all_swapi_data_records_after_creating_them_in_helper(self):
         all_records = SwapiDataRecord.objects.all()
         self.assertEqual(all_records.count(), 5)
         for record in all_records:
